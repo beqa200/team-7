@@ -41,7 +41,7 @@ export default StyledInput
 export const StyledBigInput = styled(StyledInput)`
 
         width: 100%;
-        padding: 13px 16px 69px;
+        padding: 13px 83px 46px 16px;
 
 `
 

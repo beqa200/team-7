@@ -103,11 +103,83 @@ const StyledPersonal = styled.div`
     }
 
 
+`
 
+export const StyledResult = styled.section`
 
+    padding: 48px 75px 44px 80px;
+    display: grid;
+    grid-template-columns: 63.2% 36.8%;
 
+    .info-wrapper{
 
+        .name-wrapper{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 17px;
 
+            & > h4{
+                font-size: 34px;
+                font-weight: bold;
+                color: #f93b1d;
+            }
+        }
+
+        .email-wrapper,
+        .number-wrapper{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+
+            & > img{
+                width: 16.7px;
+                height: 16.7px;
+            }
+
+            & > p{
+                font-size: 18px;
+                font-weight: normal;
+                color: #1a1a1a;
+            }
+        }
+
+        .number-wrapper{
+            margin:10px 0 34px;
+        }
+
+        .about-wrapper{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            & > h5{
+                font-size: 18px;
+                font-weight: bold;
+                color: #f93b1d;
+            }
+
+            & > p{
+                font-size: 16px;
+                font-weight: normal;
+                line-height: 1.38;
+                color: #000;
+            }
+        }
+    }
+
+    .img-container{
+        width: 246px;
+        height: 246px;
+
+        & > img{
+            width: 100%;
+            height: 100%;
+            border-radius: 133px;
+        }
+    }
 `
 
 
