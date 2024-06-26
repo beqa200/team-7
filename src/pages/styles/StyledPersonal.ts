@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledContainer = styled.div`
+const StyledPersonal = styled.div`
     display: grid;
     grid-template-columns: 57% 43%;
 
@@ -9,7 +9,7 @@ const StyledContainer = styled.div`
         display: grid;
         grid-template-columns: 11.5% 88.5%;
         background-color: #f9f9f9;
-        a{
+        & > a{
             padding: 45px 0 0 48px;
 
             & > img{
@@ -22,6 +22,7 @@ const StyledContainer = styled.div`
         form{
             padding: 47px 150px 65px 0;
             margin-left: 24px;
+            position: relative;
 
             .title{
                 width: 100%;
@@ -52,18 +53,51 @@ const StyledContainer = styled.div`
                 align-items: center;
                 gap: 8px;
 
+                
                 & > div{
+                    width: 100%;
                     display: flex;
                     flex-direction: column;
                     gap: 8px;
                     padding: 8px 24px 8px 0;
-
+                    
                 }
-
+                
                 & > div:last-child{
-                    padding: 8px 24px ;
+                    width: 100%;
+                    padding: 8px 0 8px 24px ;
                 }
+                
+                @media only screen and (max-width:1919px){
+                    flex-direction: column;
+                    align-items: flex-start;
+                    
+                    & > div:last-child{
+                        padding: 8px 0;
+                    }
+                    & > div{
+                        padding: 8px 0;
+                    }
+                }
+            }
 
+            .about-section,
+            .email-section,
+            .number-section{
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px 0;
+            }
+
+            .email-section{
+                margin: 17px 0 13px;
+            }
+
+            & > .next{
+                position: absolute;
+                bottom: 65px;
+                left: calc(100% - 301px);
             }
         }
     }
@@ -77,4 +111,4 @@ const StyledContainer = styled.div`
 `
 
 
-export default StyledContainer
+export default StyledPersonal

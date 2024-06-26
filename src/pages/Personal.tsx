@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
-import StyledContainer from "./styles/StyledContainer"
-import StyledInput from "./styles/StyledInput"
+import StyledInput, { StyledBigInput, StyledLongInput } from "./styles/StyledInput"
 import StyledLabel from "./styles/StyledLabel"
 import StyledSpan from "./styles/StyledSpan"
 import UploadPhoto from "./components/UploadPhoto"
 import { useState } from "react"
+import StyledButton from "./styles/StyledButton"
+import StyledPersonal from "./styles/StyledPersonal"
 
 function Personal() {
 
@@ -16,9 +17,8 @@ function Personal() {
 
   console.log(selectedFile);
 
-     console.log(selectedFile)
   return (
-    <StyledContainer>
+    <StyledPersonal>
       <div className="form-container">
         <Link to={'/'}><img src="/images/back-arrow.svg" alt="arrow icon" /></Link>
         <form>
@@ -41,13 +41,32 @@ function Personal() {
 
             </section>
             <UploadPhoto onFileChange={handleFileChange}/>
+
+            <div className="about-section">
+              <StyledLabel htmlFor="">ჩემ შესახებ (არასავალდებულო)</StyledLabel>
+              <StyledBigInput type="text" placeholder="ზოგადი ინფო შენ შესახებ"/>
+            </div>
+
+            <div className="email-section">
+              <StyledLabel htmlFor="">ელ. ფოსტა</StyledLabel>
+              <StyledLongInput type="text" placeholder="anzorr666@redberry.ge"/>
+              <StyledSpan>უნდა მთავრდებოდეს @redberry.ge-ით</StyledSpan>
+            </div>
+
+            <div className="number-section">
+              <StyledLabel htmlFor="">მობილურის ნომერი</StyledLabel>
+              <StyledLongInput type="text" placeholder="+995 551 12 34 56"/>
+              <StyledSpan>უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს</StyledSpan>
+            </div>
+
+            <Link to={'/experience'} className="next"><StyledButton>შემდეგი</StyledButton></Link>
         </form>
       </div>
       <div className="result">
 
       </div>
       
-    </StyledContainer>
+    </StyledPersonal>
   )
 }
 
