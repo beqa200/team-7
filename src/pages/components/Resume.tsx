@@ -37,6 +37,10 @@ function Resume({resumeInfo, preview}:ResumeProps) {
         <div className="img-container">
           {preview && <img src={preview} alt="profile" />}
         </div>
+
+        <div className="resume-logo">
+            <img src="/images/resume-logo.svg" alt="resume logo" />
+        </div>
       </StyledResult>
   )
 }

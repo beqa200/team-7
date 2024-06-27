@@ -39,18 +39,24 @@ const StyledHome = styled.div`
       margin: 384px 0 0;
       position: relative;
 
-      button{
-        padding: 18px 126px;
-        border: none;
-        border-radius: 8px;
-        background-color: #1a1a1a;
-        font-size: 20px;
-        font-weight: 500;
-        color: #fff;
+      a{
+        width: 464px;
+        height: 60px;
         margin: 40px 0 199px;
         position: absolute;
         left: 50%;
-        transform:translateX(-50%)
+        transform:translateX(-50%);
+        
+        button{
+          width: 100%;
+          padding: 18px 126px;
+          border: none;
+          border-radius: 8px;
+          background-color: #1a1a1a;
+          font-size: 20px;
+          font-weight: 500;
+          color: #fff;
+        }
       }
 
       .img-container{
@@ -58,8 +64,10 @@ const StyledHome = styled.div`
         height:299px;
         background: url(/images/bg-logo.png)  center/299px 299px;
         background-repeat: no-repeat;
+        z-index: -10;
         position: absolute;
-        left: 50%;
+        left: calc(50%);
+        transform:translateX(116px);
       }
     }
 
