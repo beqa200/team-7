@@ -1,13 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import StyledInput, { StyledBigInput, StyledLongInput } from "./styles/styled components/StyledInput";
-import StyledLabel from "./styles/styled components/StyledLabel";
-import StyledSpan from "./styles/styled components/StyledSpan";
-import UploadPhoto from "./components/UploadPhoto";
+import StyledInput, { StyledBigInput, StyledLongInput } from "../styles/styled-components/StyledInput";
+import StyledLabel from "../styles/styled-components/StyledLabel";
+import StyledSpan from "../styles/styled-components/StyledSpan";
+import UploadPhoto from "../components/UploadPhoto";
 import { useEffect, useState } from "react";
-import StyledButton from "./styles/styled components/StyledButton";
-import StyledPersonal from "./styles/StyledPersonal";
-import { PersonalProps } from "../types";
-import PersonalResume from "./components/PersonalResume";
+import StyledButton from "../styles/styled-components/StyledButton";
+import StyledPersonal from "../styles/StyledPersonal";
+import { PersonalProps } from "../../types";
+import PersonalResume from "../components/PersonalResume";
 
 
 

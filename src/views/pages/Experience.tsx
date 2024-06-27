@@ -1,10 +1,9 @@
 
 import { useEffect } from 'react';
-// import Resume from './components/Resume';
-import { PersonalProps } from '../types';
+import { PersonalProps } from '../../types';
 import { Link } from 'react-router-dom';
-import StyledButton from './styles/styled components/StyledButton';
-import PageContainer from './styles/styled components/PageContainer';
+import PageContainer from "../styles/styled-components/PageContainer"
+import StyledButton from "../styles/styled-components/StyledButton"
 
 interface ExperienceProps {
   resumeInfo: PersonalProps['resumeInfo'];

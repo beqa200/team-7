@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
-import PageContainer from "./styles/styled components/PageContainer"
-import StyledButton from "./styles/styled components/StyledButton"
-// import Resume from "./components/Resume"
+import PageContainer from "../styles/styled-components/PageContainer"
+import StyledButton from "../styles/styled-components/StyledButton"
 
 
 function Education() {
@@ -21,10 +20,6 @@ function Education() {
           <StyledButton type="submit" className="next">შემდეგი</StyledButton>
         </form>
       </div>
-      {/* <Resume
-        resumeInfo={resumeInfo}
-        preview={preview}
-      /> */}
     </PageContainer>
   )
 }
