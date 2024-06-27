@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledInput = styled.input`
+const BaseInput = styled.input`
 
         min-width: 371px;
         padding: 13px 16px 14px;
@@ -16,37 +16,32 @@ const StyledInput = styled.input`
             width: 100%;
         }
 
-        & > ::placeholder{
+        &::placeholder {
             font-size: 16px;
             line-height: 1.31;
             color: rgba(0, 0, 0, 0.6);
         }
 
-        & > :hover{
+        &:hover {
             border: solid 2px #bcbcbc;
         }
 
-        & > :active{
+        &:active {
             border: solid 2px #bcbcbc;
         }
-
-
-
-
 `
 
-export default StyledInput
+const StyledInput = styled(BaseInput)<{ $haserror: boolean, $isvalid: boolean }>`
+ border: solid 1px ${props => props.$haserror ? '#ef5050' : props.$isvalid ? '#98e37e' : '#bcbcbc'};
+`;
 
-
-export const StyledBigInput = styled(StyledInput)`
-
+export const StyledBigInput = styled(BaseInput)`
         width: 100%;
         padding: 13px 83px 46px 16px;
-
 `
 
 export const StyledLongInput = styled(StyledInput)`
-
         width: 100%;
-
 `
+
+export default StyledInput;

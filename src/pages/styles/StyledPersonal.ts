@@ -9,8 +9,11 @@ const StyledPersonal = styled.div`
         display: grid;
         grid-template-columns: 11.5% 88.5%;
         background-color: #f9f9f9;
+        
         & > a{
-            padding: 45px 0 0 48px;
+            margin: 45px 0 0 48px;
+            width: 40px;
+            height: 40px;
 
             & > img{
                 width: 40px;
@@ -23,6 +26,22 @@ const StyledPersonal = styled.div`
             padding: 47px 150px 65px 0;
             margin-left: 24px;
             position: relative;
+
+            .doneIcon{
+                width: 16.5px;
+                height: 16.5px;
+                position: absolute;
+                top: 52.8px;
+                right: 38.8px;
+            }
+
+            .errorIcon{
+                width: 21px;
+                height: 18.8px;
+                position: absolute;
+                top: 52.8px;
+                right: 0;
+            }
 
             .title{
                 width: 100%;
@@ -60,12 +79,15 @@ const StyledPersonal = styled.div`
                     flex-direction: column;
                     gap: 8px;
                     padding: 8px 24px 8px 0;
-                    
+                    position: relative;
+
                 }
                 
                 & > div:last-child{
                     width: 100%;
-                    padding: 8px 0 8px 24px ;
+                    padding: 8px 24px ;
+                    position: relative;
+
                 }
                 
                 @media only screen and (max-width:1919px){
@@ -92,6 +114,27 @@ const StyledPersonal = styled.div`
 
             .email-section{
                 margin: 17px 0 13px;
+                position: relative;
+
+                & > .doneIcon{
+                    right: 16px;
+                }
+
+                & > .errorIcon{
+                    right: -27px;
+                }
+            }
+
+            .number-section{
+                position: relative;
+
+                & > .doneIcon{
+                    right: 16px;
+                }
+
+                & > .errorIcon{
+                    right: -27px;
+                }
             }
 
             & > .next{
@@ -110,6 +153,7 @@ export const StyledResult = styled.section`
     padding: 48px 75px 44px 80px;
     display: grid;
     grid-template-columns: 63.2% 36.8%;
+    position: relative;
 
     .info-wrapper{
 
@@ -178,6 +222,17 @@ export const StyledResult = styled.section`
             width: 100%;
             height: 100%;
             border-radius: 133px;
+        }
+    }
+
+    .resume-logo{
+        position: absolute;
+        left: 78px;
+        bottom: 44px;
+
+        & > img{
+            width: 42px;
+            height: 42px
         }
     }
 `

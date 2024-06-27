@@ -64,6 +64,7 @@ const StyledHome = styled.div`
         height:299px;
         background: url(/images/bg-logo.png)  center/299px 299px;
         background-repeat: no-repeat;
+        z-index: -10;
         position: absolute;
         left: calc(50%);
         transform:translateX(116px);
