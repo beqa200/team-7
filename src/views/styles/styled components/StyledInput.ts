@@ -35,9 +35,11 @@ const StyledInput = styled(BaseInput)<{ $haserror: boolean, $isvalid: boolean }>
  border: solid 1px ${props => props.$haserror ? '#ef5050' : props.$isvalid ? '#98e37e' : '#bcbcbc'};
 `;
 
-export const StyledBigInput = styled(BaseInput)`
+export const StyledBigInput = styled(BaseInput).attrs({as:'textarea'})`
         width: 100%;
         padding: 13px 83px 46px 16px;
+        white-space: wrap;
+        
 `
 
 export const StyledLongInput = styled(StyledInput)`

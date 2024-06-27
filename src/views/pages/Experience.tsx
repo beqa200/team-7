@@ -1,7 +1,10 @@
 
 import { useEffect } from 'react';
-import Resume from './components/Resume';
+// import Resume from './components/Resume';
 import { PersonalProps } from '../types';
+import { Link } from 'react-router-dom';
+import StyledButton from './styles/styled components/StyledButton';
+import PageContainer from './styles/styled components/PageContainer';
 
 interface ExperienceProps {
   resumeInfo: PersonalProps['resumeInfo'];
@@ -27,12 +30,22 @@ const Experience: React.FC<ExperienceProps> = ({ resumeInfo, setResumeInfo,  pre
 
 
   return (
-    <div>
-      <Resume
-        resumeInfo={resumeInfo}
-        preview={preview}
-      />
-    </div>
+    <PageContainer>
+       <div className="form-container">
+        <Link to={"/personal"}>
+          <img src="/images/back-arrow.svg" alt="arrow icon" />
+        </Link>
+        <form >
+          <div className="title">
+            <h2>გამოცდილება</h2>
+            <span>2/3</span>
+          </div>
+            
+          
+          <StyledButton type="submit" className="next">შემდეგი</StyledButton>
+        </form>
+      </div>
+    </PageContainer>
   );
 };
 
