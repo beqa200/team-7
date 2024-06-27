@@ -1,15 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StyledInput, { StyledBigInput, StyledLongInput } from "./styles/StyledInput";
 import StyledLabel from "./styles/StyledLabel";
 import StyledSpan from "./styles/StyledSpan";
 import UploadPhoto from "./components/UploadPhoto";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StyledButton from "./styles/StyledButton";
 import StyledPersonal from "./styles/StyledPersonal";
 import Resume from "./components/Resume";
+import { PersonalProps } from "../types";
 
-function Personal() {
-  const [preview, setPreview] = useState<string | null>(null);
+
+
+function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProps) {
+
+  const navigate = useNavigate();
 
   const handleFileChange = (file: File) => {
     const objectUrl = URL.createObjectURL(file);
@@ -19,15 +23,6 @@ function Personal() {
       photo: file
     }));
   };
-
-  const [resumeInfo, setResumeInfo] = useState({
-    name: "",
-    surname: "",
-    about: "",
-    email: "",
-    number: "",
-    photo: null as File | null
-  });
 
   const [errors, setErrors] = useState({
     name: "",
@@ -92,19 +87,37 @@ function Personal() {
     }));
   };
 
+  useEffect(() => {
+    const savedResumeInfo = localStorage.getItem('resumeInfo');
+    const savedPreview = localStorage.getItem('photoPreview');
+
+    if (savedResumeInfo) {
+      setResumeInfo(JSON.parse(savedResumeInfo));
+    }
+    if (savedPreview) {
+      setPreview(savedPreview);
+    }
+  }, []);
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("name", resumeInfo.name);
-    formData.append("surname", resumeInfo.surname);
-    formData.append("about", resumeInfo.about);
-    formData.append("email", resumeInfo.email);
-    formData.append("number", resumeInfo.number);
-    if (resumeInfo.photo) {
-      formData.append("photo", resumeInfo.photo);
+  
+    const isEmpty = Object.values(resumeInfo).every(value => 
+      value === null || (typeof value === 'string' && value.trim() === '')
+    );
+  
+    if (!isEmpty) {
+      localStorage.setItem("resumeInfo", JSON.stringify(resumeInfo));
+      if (preview) {
+        localStorage.setItem("photoPreview", preview);
+      }
     }
+  
+    navigate("/experience");
   };
+
+  console.log(localStorage)
 
   return (
     <StyledPersonal>
@@ -199,9 +212,7 @@ function Personal() {
               <img className={errors.number ? 'errorIcon' : "doneIcon"} src={errors.number ? './images/icon-error.svg' : '/images/icon-done.svg'} alt="error icon" />
             )}
           </div>
-          <Link to={"/experience"} className="next">
-            <StyledButton type="submit">შემდეგი</StyledButton>
-          </Link>
+          <StyledButton type="submit" className="next">შემდეგი</StyledButton>
         </form>
       </div>
       <Resume preview={preview} resumeInfo={resumeInfo} />
