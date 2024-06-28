@@ -12,7 +12,7 @@ interface ExperienceProps {
   setPreview: PersonalProps['setPreview'];
 }
 
-const Experience: React.FC<ExperienceProps> = ({ resumeInfo, setResumeInfo,  preview, setPreview}) => {
+const Experience: React.FC<ExperienceProps> = ({  setResumeInfo,  setPreview}) => {
 
 
   useEffect(() => {
