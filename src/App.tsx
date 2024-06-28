@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom"
-import Home from "./pages/Home"
-import Personal from "./pages/Personal"
-import Experience from "./pages/Experience"
-import Education from "./pages/Education"
-import Result from "./pages/Result"
+import Home from "./views/pages/Home"
+import Personal from "./views/pages/Personal"
+import Experience from "./views/pages/Experience"
+import Education from "./views/pages/Education"
+import Result from "./views/pages/Result"
 import { useState } from "react"
 
 

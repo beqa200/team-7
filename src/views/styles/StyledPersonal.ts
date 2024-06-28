@@ -210,6 +210,7 @@ export const StyledResult = styled.section`
                 font-weight: normal;
                 line-height: 1.38;
                 color: #000;
+                word-break: break-all;
             }
         }
     }
