@@ -8,12 +8,12 @@ import PersonalResume from '../components/PersonalResume';
 import { ExperienceProps } from '../../types';
 
 const Experience: React.FC<ExperienceProps> = ({ 
-  resumeInfo, 
-  preview, 
+  general, 
+  photo, 
   touched, 
-  experienceList, 
-  setExperienceList, 
-  eduList,
+  experience, 
+  setExperience, 
+  education,
   expTouched,
   eduTouched, 
   setExpTouched }) => {
@@ -53,33 +53,33 @@ const Experience: React.FC<ExperienceProps> = ({
       [id]: error
     }));
 
-    const newExperienceList = [...experienceList];
-    newExperienceList[index] = {
-      ...newExperienceList[index],
+    const newexperience = [...experience];
+    newexperience[index] = {
+      ...newexperience[index],
       [id]: value
     };
 
-    setExperienceList(newExperienceList);
+    setExperience(newexperience);
 
     setExpTouched((prevState) => ({
       ...prevState,
       [id]: true
     }));
-    localStorage.setItem("experienceList", JSON.stringify({
-      ...experienceList,
+    localStorage.setItem("experience", JSON.stringify({
+      ...experience,
       [id]: value
     }));
   };
 
   const handleDateChange = (index: number, field: 'start_date' | 'end_date', date: string) => {
-    const newExperienceList = [...experienceList];
-    newExperienceList[index] = {
-      ...newExperienceList[index],
+    const newexperience = [...experience];
+    newexperience[index] = {
+      ...newexperience[index],
       [field]: date,
     };
-    localStorage.setItem('experienceList', JSON.stringify(newExperienceList));
+    localStorage.setItem('experience', JSON.stringify(newexperience));
 
-    setExperienceList(newExperienceList);
+    setExperience(newexperience);
 
     setExpTouched((prevState) => ({
       ...prevState,
@@ -88,24 +88,24 @@ const Experience: React.FC<ExperienceProps> = ({
   };
 
   const addExperienceForm = () => {
-    setExperienceList([...experienceList, { position: "", employer: "", start_date: "", end_date: "", info: "" }]);
+    setExperience([...experience, { position: "", employer: "", start_date: "", end_date: "", info: "" }]);
   };
 
   const removeExperienceForm = () => {
-    if (experienceList.length > 1) {
-      setExperienceList(experienceList.slice(0, -1));
+    if (experience.length > 1) {
+      setExperience(experience.slice(0, -1));
     }
   };
 
   const handleBack = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    localStorage.setItem('experienceList', JSON.stringify(experienceList));
+    localStorage.setItem('experience', JSON.stringify(experience));
     navigate("/personal"); 
   };
 
   const handleBackToHomePage = () => {
-    localStorage.removeItem('resumeInfo');
-    localStorage.removeItem('photoPreview');
+    localStorage.removeItem('general');
+    localStorage.removeItem('photo');
 
     navigate("/");
     window.location.reload();
@@ -114,13 +114,13 @@ const Experience: React.FC<ExperienceProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    for (let experience of experienceList) {
-      if (!experience.position || !experience.employer || !experience.start_date || !experience.end_date) {
+    for (let exp of experience) {
+      if (!exp.position || !exp.employer || !exp.start_date || !exp.end_date) {
         return;
       }
     }
 
-    localStorage.setItem('experienceList', JSON.stringify(experienceList));
+    localStorage.setItem('experience', JSON.stringify(experience));
     navigate("/education");
   };
   return (
@@ -134,10 +134,10 @@ const Experience: React.FC<ExperienceProps> = ({
             <h2>გამოცდილება</h2>
             <span>2/3</span>
           </div>
-          {experienceList.map((experience, index) => (
+          {experience.map((exp, index) => (
             <ExperienceForm
               key={index}
-              expInfo={experience}
+              expInfo={exp}
               handleChange={(e) => handleChange(index, e)}
               handleDateChange={(field, date) => handleDateChange(index, field, date)}
               experienceErrors={experienceErrors}
@@ -146,7 +146,7 @@ const Experience: React.FC<ExperienceProps> = ({
           ))}
           <div className='addExpBtn'>
             <StyledBntMore onClick={addExperienceForm} type="button">მეტი გამოცდილების დამატება</StyledBntMore>
-            {experienceList.length > 1 && (
+            {experience.length > 1 && (
               <StyledBtnLess onClick={removeExperienceForm} type="button">გამოცდილების წაშლა</StyledBtnLess>
             )}
           </div>
@@ -156,12 +156,12 @@ const Experience: React.FC<ExperienceProps> = ({
         </form>
       </div>
       <PersonalResume 
-      resumeInfo={resumeInfo} 
-      preview={preview} 
+      general={general} 
+      photo={photo} 
       touched={touched} 
       expTouched={expTouched}
-      experienceList={experienceList} 
-      eduList={eduList}
+      experience={experience} 
+      education={education}
       eduTouched={eduTouched}
       >
       </PersonalResume>

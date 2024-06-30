@@ -1,20 +1,20 @@
 export interface PersonalProps{
-  resumeInfo: {
+  general: {
     name: string;
     last_name: string;
     bio: string;
     email: string;
     number: string;
 },
-setResumeInfo: React.Dispatch<React.SetStateAction<{
+setGeneral: React.Dispatch<React.SetStateAction<{
   name: string;
   last_name: string;
   bio: string;
   email: string;
   number: string;
 }>>,
-  preview: string | null,
-  setPreview: React.Dispatch<React.SetStateAction<string | null>>,
+  photo: string | null,
+  setPhoto: React.Dispatch<React.SetStateAction<string | null>>,
   touched: {
     name: boolean;
     last_name: boolean;
@@ -40,14 +40,14 @@ eduTouched: {
   number: boolean;
   bio: boolean;
 }>>,
-experienceList: {
+experience: {
   position: string;
   employer: string;
   start_date: string;
   end_date: string;
   info: string;
 }[],
-  eduList: {
+  education: {
     education: string;
     degree: string;
     end_date: string;
@@ -76,36 +76,36 @@ experienceList: {
 
 
 export interface ExperienceProps {
-  resumeInfo: {
+  general: {
     name: string;
     last_name: string;
     bio: string;
     email: string;
     number: string;
-},setResumeInfo: React.Dispatch<React.SetStateAction<{
+},setGeneral: React.Dispatch<React.SetStateAction<{
   name: string;
   last_name: string;
   bio: string;
   email: string;
   number: string;
 }>>,
-preview: string | null,
-setPreview: React.Dispatch<React.SetStateAction<string | null>>,
-experienceList: {
+photo: string | null,
+setPhoto: React.Dispatch<React.SetStateAction<string | null>>,
+experience: {
   position: string;
   employer: string;
   start_date: string;
   end_date: string;
   info: string;
 }[],
-setExperienceList: React.Dispatch<React.SetStateAction<{
+setExperience: React.Dispatch<React.SetStateAction<{
   position: string;
   employer: string;
   start_date: string;
   end_date: string;
   info: string;
 }[]>>,
-eduList: {
+education: {
   education: string;
   degree: string;
   end_date: string;
@@ -141,23 +141,23 @@ setExpTouched: React.Dispatch<React.SetStateAction<{
 }
 
 export interface EducationProps {
-  resumeInfo: PersonalProps['resumeInfo'];
-  setResumeInfo: PersonalProps['setResumeInfo'];
-  preview: PersonalProps['preview'];
-  setPreview: PersonalProps['setPreview'];
-  eduList: {
+  general: PersonalProps['general'];
+  setGeneral: PersonalProps['setGeneral'];
+  photo: PersonalProps['photo'];
+  setPhoto: PersonalProps['setPhoto'];
+  education: {
     education: string;
     degree: string;
     end_date: string;
     info: string;
   }[],
-  setEduList: React.Dispatch<React.SetStateAction<{
+  setEducation: React.Dispatch<React.SetStateAction<{
     education: string;
     degree: string;
     end_date: string;
     info: string;
 }[]>>,
-  experienceList:{
+  experience:{
     position: string;
     employer: string;
     start_date: string;

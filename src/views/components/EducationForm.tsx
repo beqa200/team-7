@@ -41,10 +41,10 @@ function EducationForm({
   return (
     <div>
       <StyledInputDiv>
-        <StyledLabel htmlFor="school">სასწავლებელი</StyledLabel>
+        <StyledLabel htmlFor="education">სასწავლებელი</StyledLabel>
         <StyledLongInput
           type="text"
-          id="school"
+          id="education"
           placeholder="სასწავლებელი"
           value={eduInfo.education}
           onChange={handleChange}
@@ -76,9 +76,9 @@ function EducationForm({
       </FlexDatePicker>
 
       <StyledDescDiv>
-        <StyledLabel htmlFor="eduDesc">აღწერა</StyledLabel>
+        <StyledLabel htmlFor="info">აღწერა</StyledLabel>
         <StyledBigInput
-          id="eduDesc"
+          id="info"
           placeholder="განათლების აღწერა"
           value={eduInfo.info}
           onChange={handleChange}

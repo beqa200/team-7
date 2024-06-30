@@ -7,7 +7,7 @@ import PersonalResume from '../components/PersonalResume';
 import { EducationProps } from '../../types';
 import EducationForm from '../components/EducationForm';
 
-const Education: React.FC<EducationProps> = ({ resumeInfo, preview, experienceList, touched, eduTouched, setEduTouched, eduList, setEduList, expTouched }) => {
+const Education: React.FC<EducationProps> = ({ general, photo, experience, touched, eduTouched, setEduTouched, education, setEducation, expTouched }) => {
   const navigate = useNavigate(); 
 
   const [eduError, setEduError] = useState({
@@ -35,75 +35,75 @@ const Education: React.FC<EducationProps> = ({ resumeInfo, preview, experienceLi
       [id]: error
     }));
 
-    const newEduList = [...eduList];
-    newEduList[index] = {
-      ...newEduList[index],
+    const neweducation = [...education];
+    neweducation[index] = {
+      ...neweducation[index],
       [id]: value
     };
 
-    setEduList(newEduList);
+    setEducation(neweducation);
 
     setEduTouched((prevState) => ({
       ...prevState,
       [id]: true
     }));
 
-    localStorage.setItem('eduList', JSON.stringify(eduList));
+    localStorage.setItem('education', JSON.stringify(education));
   };
 
   const handleDateChange = (index: number, field: 'start_date' | 'end_date', date: string) => {
-    const newEduList = [...eduList];
-    newEduList[index] = {
-      ...newEduList[index],
+    const neweducation = [...education];
+    neweducation[index] = {
+      ...neweducation[index],
       [field]: date,
     };
 
-    setEduList(newEduList);
+    setEducation(neweducation);
 
     setEduTouched((prevState) => ({
       ...prevState,
       [field]: true
     }));
 
-    localStorage.setItem('eduList', JSON.stringify(eduList));
+    localStorage.setItem('education', JSON.stringify(education));
   };
 
   const handleDegreeChange = (index: number, value: string) => {
-    const newEduList = [...eduList];
-    newEduList[index] = {
-      ...newEduList[index],
+    const neweducation = [...education];
+    neweducation[index] = {
+      ...neweducation[index],
       degree: value,
     };
 
-    setEduList(newEduList);
+    setEducation(neweducation);
 
     setEduTouched((prevState) => ({
       ...prevState,
       degree: true
     }));
     
-    localStorage.setItem('eduList', JSON.stringify(eduList));
+    localStorage.setItem('education', JSON.stringify(education));
   };
 
   const addEduForm = () => {
-    setEduList([...eduList, { education: "", degree: "", end_date: "", info: "" }]);
+    setEducation([...education, { education: "", degree: "", end_date: "", info: "" }]);
   };
 
   const removeEduForm = () => {
-    if (eduList.length > 1) {
-      setEduList(eduList.slice(0, -1));
+    if (education.length > 1) {
+      setEducation(education.slice(0, -1));
     }
   };
 
   const handleBack = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    localStorage.setItem('eduList', JSON.stringify(eduList));
+    localStorage.setItem('education', JSON.stringify(education));
     navigate("/experience"); 
   };
 
   const handleBackToHomePage = () => {
-    localStorage.removeItem('resumeInfo');
-    localStorage.removeItem('photoPreview');
+    localStorage.removeItem('general');
+    localStorage.removeItem('photo');
 
     navigate("/");
     window.location.reload();
@@ -112,7 +112,7 @@ const Education: React.FC<EducationProps> = ({ resumeInfo, preview, experienceLi
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    localStorage.setItem('eduList', JSON.stringify(eduList));
+    localStorage.setItem('education', JSON.stringify(education));
     navigate("/result");
   };
 
@@ -127,7 +127,7 @@ const Education: React.FC<EducationProps> = ({ resumeInfo, preview, experienceLi
             <h2>განათლება</h2>
             <span>3/3</span>
           </div>
-          {eduList.map((edu, index) => (
+          {education.map((edu, index) => (
             <EducationForm
               key={index}
               eduInfo={edu}
@@ -140,7 +140,7 @@ const Education: React.FC<EducationProps> = ({ resumeInfo, preview, experienceLi
           ))}
           <div className='addExpBtn'>
             <StyledBntMore onClick={addEduForm} type="button">სხვა სასწავლებლის დამატება</StyledBntMore>
-            {eduList.length > 1 && (
+            {education.length > 1 && (
               <StyledBtnLess onClick={removeEduForm} type="button">სასწავლებლის წაშლა</StyledBtnLess>
             )}
           </div>
@@ -150,11 +150,11 @@ const Education: React.FC<EducationProps> = ({ resumeInfo, preview, experienceLi
         </form>
       </div>
       <PersonalResume
-        resumeInfo={resumeInfo}
-        preview={preview}
+        general={general}
+        photo={photo}
         touched={touched}
-        experienceList={experienceList}
-        eduList={eduList}
+        experience={experience}
+        education={education}
         expTouched={expTouched}
         eduTouched={eduTouched}
       />

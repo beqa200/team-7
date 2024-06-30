@@ -5,41 +5,41 @@ import { StyledResult } from "../styles/StyledPersonal";
 import StyledEduInfo from "../styles/styled-components/StyledEduInfo";
 
 interface ResumeProps {
-  resumeInfo: {
+  general: {
     name: string;
     last_name: string;
     bio: string;
     email: string;
     number: string;
   },
-  preview: string | null,
+  photo: string | null,
   touched: {
     name: boolean;
     last_name: boolean;
     email: boolean;
     number: boolean;
     bio: boolean;
-},
-  experienceList: {
+  },
+  experience: {
     position: string;
     employer: string;
     start_date: string;
     end_date: string;
     info: string;
   }[],
-  eduList: {
+  education: {
     education: string;
     degree: string;
     end_date: string;
     info: string;
-}[],
+  }[],
   expTouched: {
     position: boolean;
     employer: boolean;
     start_date: boolean;
     end_date: boolean;
     info: boolean;
-  }
+  },
   eduTouched: {
     education: boolean;
     degree: boolean;
@@ -49,103 +49,112 @@ interface ResumeProps {
 }
 
 function PersonalResume({
-  resumeInfo,
-  preview,
+  general,
+  photo,
   touched,
-  experienceList,
-  eduList,
+  experience,
+  education,
   expTouched,
   eduTouched
 }: ResumeProps) {
 
-  const [localResumeInfo, setLocalResumeInfo] = useState(resumeInfo);
-  const [localPreview, setLocalPreview] = useState(preview);
-  const [localExperienceList, setLocalExperienceList] = useState(experienceList);
-  const [localEduList, setLocalEduList] = useState(eduList);
+  const [localGeneral, setLocalGeneral] = useState(general);
+  const [localPhoto, setLocalPhoto] = useState(photo);
+  const [localExperience, setLocalExperience] = useState(experience);
+  const [localEducationList, setLocalEducationList] = useState(education);
 
   useEffect(() => {
-    const savedResumeInfo = localStorage.getItem("resumeInfo");
-    const savedPreview = localStorage.getItem("photoPreview");
-    const savedExperienceList = localStorage.getItem("experienceList");
-    const savedEduList = localStorage.getItem("eduList");
+    const savedGeneral = localStorage.getItem("general");
+    const savedPhoto = localStorage.getItem("photo");
+    const savedExperience = localStorage.getItem("experience");
+    const savedEducationList = localStorage.getItem("education");
 
-    if (savedResumeInfo) {
-      setLocalResumeInfo(JSON.parse(savedResumeInfo));
+    if (savedGeneral) {
+      setLocalGeneral(JSON.parse(savedGeneral));
     } else {
-      setLocalResumeInfo(resumeInfo);
+      setLocalGeneral(general);
     }
 
-    if (savedPreview) {
-      setLocalPreview(savedPreview);
+    if (savedPhoto) {
+      setLocalPhoto(savedPhoto);
     } else {
-      setLocalPreview(preview);
+      setLocalPhoto(photo);
     }
 
-    if (savedExperienceList) {
-      setLocalExperienceList(JSON.parse(savedExperienceList));
+    if (savedExperience) {
+      try {
+        const parsedExperience = JSON.parse(savedExperience);
+        if (Array.isArray(parsedExperience)) {
+          setLocalExperience(parsedExperience);
+        } else {
+          console.error("savedExperience is not an array:", parsedExperience);
+          setLocalExperience(experience);
+        }
+      } catch (e) {
+        console.error("Error parsing savedExperience:", e);
+        setLocalExperience(experience);
+      }
     } else {
-      setLocalExperienceList(experienceList);
+      setLocalExperience(experience);
     }
 
-    if (savedEduList) {
-      setLocalEduList(JSON.parse(savedEduList));
+    if (savedEducationList) {
+      try {
+        const parsedEducation = JSON.parse(savedEducationList);
+        if (Array.isArray(parsedEducation)) {
+          setLocalEducationList(parsedEducation);
+        } else {
+          console.error("savedEducationList is not an array:", parsedEducation);
+          setLocalEducationList(education);
+        }
+      } catch (e) {
+        console.error("Error parsing savedEducationList:", e);
+        setLocalEducationList(education);
+      }
     } else {
-      setLocalEduList(eduList);
+      setLocalEducationList(education);
     }
-  }, [resumeInfo, preview, experienceList, eduList]);
+  }, [general, photo, experience, education]);
 
-  useEffect(() => {
-    localStorage.setItem("resumeInfo", JSON.stringify(localResumeInfo));
-  }, [localResumeInfo]);
-
-  useEffect(() => {
-    localStorage.setItem("photoPreview", localPreview || "");
-  }, [localPreview]);
-
-  useEffect(() => {
-    localStorage.setItem("experienceList", JSON.stringify(localExperienceList));
-  }, [localExperienceList]);
-
-  useEffect(() => {
-    localStorage.setItem("eduList", JSON.stringify(localEduList));
-  }, [localEduList]);
+  console.log("localExperience:", localExperience);
+  console.log("localEducationList:", localEducationList);
 
   return (
     <StyledResume>
       <StyledResult>
         <div className="info-wrapper">
-          {touched.name || localResumeInfo.name ? (
+          {touched.name || localGeneral.name ? (
             <div className="name-wrapper">
-              <h4>{localResumeInfo.name}</h4>
-              <h4>{localResumeInfo.last_name}</h4>
+              <h4>{localGeneral.name}</h4>
+              <h4>{localGeneral.last_name}</h4>
             </div>
           ) : null}
 
-          {touched.email || localResumeInfo.email ? (
+          {touched.email || localGeneral.email ? (
             <div className="email-wrapper">
               <img src="/images/icon-email.svg" alt="email icon" />
-              <p>{localResumeInfo.email}</p>
+              <p>{localGeneral.email}</p>
             </div>
           ) : null}
-          {touched.number || localResumeInfo.number ? (
+          {touched.number || localGeneral.number ? (
             <div className="number-wrapper">
               <img src="/images/icon-number.svg" alt="phone icon" />
-              <p>{localResumeInfo.number}</p>
+              <p>{localGeneral.number}</p>
             </div>
           ) : null}
-          {touched.bio || localResumeInfo.bio ? (
+          {touched.bio || localGeneral.bio ? (
             <div className="about-wrapper">
               <h5>ჩემ შესახებ</h5>
-              <p>{localResumeInfo.bio}</p>
+              <p>{localGeneral.bio}</p>
             </div>
           ) : null}
         </div>
 
         <div className="img-container">
-          {localPreview && <img src={localPreview} alt="profile" />}
+          {localPhoto && <img src={localPhoto} alt="profile" />}
         </div>
 
-        {(touched.bio || localResumeInfo.bio || localPreview) && <hr />}
+        {(touched.bio || localGeneral.bio || localPhoto) && <hr />}
       </StyledResult>
       <StyledExpInfo>
         {expTouched.employer && <h5>გამოცდილება</h5>}
@@ -153,7 +162,7 @@ function PersonalResume({
           expTouched.employer ||
           expTouched.start_date ||
           expTouched.end_date) &&
-          localExperienceList.map((item, index) => (
+          localExperience.map((item, index) => (
             <div key={index}>
               {(expTouched.position || expTouched.employer) && (
                 <h6>
@@ -161,7 +170,7 @@ function PersonalResume({
                 </h6>
               )}
               <div>
-                {expTouched.start_date&& <span>{item.start_date}</span>}
+                {expTouched.start_date && <span>{item.start_date}</span>}
                 {expTouched.end_date && <span>{item.end_date}</span>}
               </div>
               {expTouched.info && <p>{item.info}</p>}
@@ -176,7 +185,7 @@ function PersonalResume({
           eduTouched.degree ||
           eduTouched.end_date ||
           eduTouched.info) &&
-          localEduList.map((item, index) => (
+          localEducationList.map((item, index) => (
             <div key={index}>
               {(eduTouched.education || eduTouched.degree) && (
                 <h6>

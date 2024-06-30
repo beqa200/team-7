@@ -9,7 +9,7 @@ import { useState } from "react"
 
 function App() {
 
-  const [resumeInfo, setResumeInfo] = useState({
+  const [general, setGeneral] = useState({
     name: "",
     last_name: "",
     bio: "",
@@ -41,7 +41,7 @@ function App() {
   });
 
 
-  const [experienceList, setExperienceList] = useState([{ 
+  const [experience, setExperience] = useState([{ 
     position: "",
     employer: "",
     start_date: "",
@@ -49,14 +49,14 @@ function App() {
     info: "",}]
   );
 
-  const [eduList, setEduList] = useState([{ 
+  const [education, setEducation] = useState([{ 
     education: "",
     degree: "",
     end_date: "",
     info: "",}]
   );
 
-  const [preview, setPreview] = useState<string | null>(null);
+  const [photo, setPhoto] = useState<string | null>(null);
 
 
   return (
@@ -65,38 +65,38 @@ function App() {
       <Route path="/" element = {<Home/>}/>
 
       <Route path="/personal" element = {<Personal 
-      resumeInfo={resumeInfo} 
-      setResumeInfo={setResumeInfo} 
-      preview={preview} 
-      setPreview={setPreview} 
+      general={general} 
+      setGeneral={setGeneral} 
+      photo={photo} 
+      setPhoto={setPhoto} 
       touched={touched}
       expTouched={expTouched}
       eduTouched={eduTouched}
       setTouched={setTouched}
-      experienceList={experienceList}
-      eduList={eduList}/>}/>
+      experience={experience}
+      education={education}/>}/>
 
       <Route path="/experience" element = {<Experience 
-      resumeInfo={resumeInfo} 
-      setResumeInfo={setResumeInfo} 
-      preview={preview} 
-      setPreview={setPreview}
-      experienceList={experienceList}
-      setExperienceList={setExperienceList}
-      eduList={eduList}
+      general={general} 
+      setGeneral={setGeneral} 
+      photo={photo} 
+      setPhoto={setPhoto}
+      experience={experience}
+      setExperience={setExperience}
+      education={education}
       touched={touched}
       expTouched={expTouched}
       eduTouched={eduTouched}
       setExpTouched={setExpTouched}/>}/>
       
       <Route path="/education" element = {<Education 
-        resumeInfo={resumeInfo} 
-        setResumeInfo={setResumeInfo} 
-        preview={preview} 
-        setPreview={setPreview}
-        experienceList={experienceList}
-        eduList={eduList}
-        setEduList={setEduList}
+        general={general} 
+        setGeneral={setGeneral} 
+        photo={photo} 
+        setPhoto={setPhoto}
+        experience={experience}
+        education={education}
+        setEducation={setEducation}
         touched={touched}
         expTouched={expTouched}
         eduTouched={eduTouched}

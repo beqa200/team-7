@@ -83,14 +83,14 @@ function ExperienceForm({
 
       <FlexDatePicker>
         <div>
-          <StyledLabel htmlFor='startDate'>დაწყების რიცხვი</StyledLabel>
+          <StyledLabel htmlFor='start_date'>დაწყების რიცხვი</StyledLabel>
           <DatePickerInput
             $haserror={!!expTouched.start_date}
             onDateChange={(date) => handleDateChange('start_date', date)}
           />
         </div>
         <div>
-          <StyledLabel htmlFor='endDate'>დამთვარების რიცხვი</StyledLabel>
+          <StyledLabel htmlFor='end_date'>დამთვარების რიცხვი</StyledLabel>
           <DatePickerInput
             $haserror={!!expTouched.end_date}
             onDateChange={(date) => handleDateChange('end_date', date)}
@@ -99,9 +99,9 @@ function ExperienceForm({
       </FlexDatePicker>
 
       <StyledDescDiv>
-        <StyledLabel htmlFor="jobDesc">აღწერა</StyledLabel>
+        <StyledLabel htmlFor="info">აღწერა</StyledLabel>
         <StyledBigInput
-          id="jobDesc"
+          id="info"
           placeholder="როლი თანამდებობაზე და ზოგადი აღწერა"
           value={expInfo.info}
           onChange={handleChange}
