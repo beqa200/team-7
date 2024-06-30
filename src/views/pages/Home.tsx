@@ -19,11 +19,11 @@ function Home() {
 
 
 const StyledHome = styled.div`
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     background: url(/images/bg-home.png) no-repeat;
     background-size: cover;
-
+    
     & > img{
       padding: 25px 70px;
     }
