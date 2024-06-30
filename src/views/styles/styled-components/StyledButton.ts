@@ -10,6 +10,15 @@ const StyledButton = styled.button`
     font-weight: 500;
     letter-spacing: 1.28px;
     color: #fff;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #7949ff;
+    }
+
+    &:active{
+        background-color: #512faf;
+    }
 `
 
 

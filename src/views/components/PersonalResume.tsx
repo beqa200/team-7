@@ -11,6 +11,7 @@ interface ResumeProps {
     bio: string;
     email: string;
     number: string;
+    photo: string | null,
   },
   photo: string | null,
   touched: {
@@ -59,13 +60,11 @@ function PersonalResume({
 }: ResumeProps) {
 
   const [localGeneral, setLocalGeneral] = useState(general);
-  const [localPhoto, setLocalPhoto] = useState(photo);
   const [localExperience, setLocalExperience] = useState(experience);
   const [localEducationList, setLocalEducationList] = useState(education);
 
   useEffect(() => {
     const savedGeneral = localStorage.getItem("general");
-    const savedPhoto = localStorage.getItem("photo");
     const savedExperience = localStorage.getItem("experience");
     const savedEducationList = localStorage.getItem("education");
 
@@ -75,11 +74,7 @@ function PersonalResume({
       setLocalGeneral(general);
     }
 
-    if (savedPhoto) {
-      setLocalPhoto(savedPhoto);
-    } else {
-      setLocalPhoto(photo);
-    }
+
 
     if (savedExperience) {
       try {
@@ -87,11 +82,9 @@ function PersonalResume({
         if (Array.isArray(parsedExperience)) {
           setLocalExperience(parsedExperience);
         } else {
-          console.error("savedExperience is not an array:", parsedExperience);
           setLocalExperience(experience);
         }
       } catch (e) {
-        console.error("Error parsing savedExperience:", e);
         setLocalExperience(experience);
       }
     } else {
@@ -104,11 +97,9 @@ function PersonalResume({
         if (Array.isArray(parsedEducation)) {
           setLocalEducationList(parsedEducation);
         } else {
-          console.error("savedEducationList is not an array:", parsedEducation);
           setLocalEducationList(education);
         }
       } catch (e) {
-        console.error("Error parsing savedEducationList:", e);
         setLocalEducationList(education);
       }
     } else {
@@ -116,8 +107,7 @@ function PersonalResume({
     }
   }, [general, photo, experience, education]);
 
-  console.log("localExperience:", localExperience);
-  console.log("localEducationList:", localEducationList);
+  console.log(localGeneral.photo)
 
   return (
     <StyledResume>
@@ -151,49 +141,61 @@ function PersonalResume({
         </div>
 
         <div className="img-container">
-          {localPhoto && <img src={localPhoto} alt="profile" />}
+          {localGeneral.photo && <img src={localGeneral.photo} alt="profile" />}
         </div>
 
-        {(touched.bio || localGeneral.bio || localPhoto) && <hr />}
+        {(touched.bio || localGeneral.bio || localGeneral.photo) && <hr />}
       </StyledResult>
       <StyledExpInfo>
-        {expTouched.employer && <h5>გამოცდილება</h5>}
-        {(expTouched.position ||
+        {(expTouched.employer || localExperience[0].employer)
+        && 
+        <h5>გამოცდილება</h5>}
+        {((expTouched.position ||
           expTouched.employer ||
           expTouched.start_date ||
-          expTouched.end_date) &&
+          expTouched.end_date) || 
+          (localExperience[0].employer || 
+            localExperience[0].position || 
+            localExperience[0].start_date || 
+            localExperience[0].end_date)) &&
+
           localExperience.map((item, index) => (
             <div key={index}>
-              {(expTouched.position || expTouched.employer) && (
+              {((expTouched.position || expTouched.employer) || localExperience[index].employer || localExperience[index].position) && (
                 <h6>
                   {item.position},{item.employer}
                 </h6>
               )}
               <div>
-                {expTouched.start_date && <span>{item.start_date}</span>}
-                {expTouched.end_date && <span>{item.end_date}</span>}
+                {(expTouched.start_date || localExperience[index].start_date) && <span>{item.start_date}</span>}
+                {(expTouched.end_date || localExperience[index].start_date ) && <span>{item.end_date}</span>}
               </div>
-              {expTouched.info && <p>{item.info}</p>}
+              {((expTouched.info || localExperience[index].info)) && <p>{item.info}</p>}
             </div>
           ))}
-        {expTouched.info && <hr />}
+        {((expTouched.info || localExperience[0].info)) && <hr />}
       </StyledExpInfo>
 
       <StyledEduInfo>
-        {eduTouched.education && <h5>განათლება</h5>}
-        {(eduTouched.education ||
+        {(eduTouched.education || localEducationList[0].education) && <h5>განათლება</h5>}
+        {((eduTouched.education ||
           eduTouched.degree ||
           eduTouched.end_date ||
-          eduTouched.info) &&
+          eduTouched.info) || 
+          (localEducationList[0].education || 
+            localEducationList[0].degree || 
+            localEducationList[0].end_date || 
+            localEducationList[0].info )) &&
+            
           localEducationList.map((item, index) => (
             <div key={index}>
-              {(eduTouched.education || eduTouched.degree) && (
+              {((eduTouched.education || eduTouched.degree) || (localEducationList[index].education || localEducationList[index].degree) ) && (
                 <h6>
                   {item.education},{item.degree}
                 </h6>
               )}
-              {eduTouched.end_date && <span>{item.end_date}</span>}
-              {eduTouched.info && <p>{item.info}</p>}
+              {(eduTouched.end_date ||  localEducationList[index].end_date)&& <span>{item.end_date}</span>}
+              {(eduTouched.info || localEducationList[index].info )&& <p>{item.info}</p>}
             </div>
           ))}
       </StyledEduInfo>

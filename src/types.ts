@@ -5,6 +5,7 @@ export interface PersonalProps{
     bio: string;
     email: string;
     number: string;
+    photo: string | null
 },
 setGeneral: React.Dispatch<React.SetStateAction<{
   name: string;
@@ -12,7 +13,8 @@ setGeneral: React.Dispatch<React.SetStateAction<{
   bio: string;
   email: string;
   number: string;
-}>>,
+  photo: string;
+}>>
   photo: string | null,
   setPhoto: React.Dispatch<React.SetStateAction<string | null>>,
   touched: {
@@ -82,13 +84,15 @@ export interface ExperienceProps {
     bio: string;
     email: string;
     number: string;
-},setGeneral: React.Dispatch<React.SetStateAction<{
+    photo: string | null
+},setGeneral:React.Dispatch<React.SetStateAction<{
   name: string;
   last_name: string;
   bio: string;
   email: string;
   number: string;
-}>>,
+  photo: string;
+}>>
 photo: string | null,
 setPhoto: React.Dispatch<React.SetStateAction<string | null>>,
 experience: {

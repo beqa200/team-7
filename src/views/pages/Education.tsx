@@ -103,18 +103,49 @@ const Education: React.FC<EducationProps> = ({ general, photo, experience, touch
 
   const handleBackToHomePage = () => {
     localStorage.removeItem('general');
-    localStorage.removeItem('photo');
+    localStorage.removeItem('experience');
+    localStorage.removeItem('education');
 
     navigate("/");
     window.location.reload();
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     localStorage.setItem('education', JSON.stringify(education));
+
+    const savedGeneral = localStorage.getItem("general");
+    const savedExperience = localStorage.getItem("experience");
+    const savedEducation = localStorage.getItem("education");
+
+    const general = savedGeneral ? JSON.parse(savedGeneral) : {};
+    const experience = savedExperience ? JSON.parse(savedExperience) : [];
+    const educationList = savedEducation ? JSON.parse(savedEducation) : [];
+
+    const resumeData = {
+        general,
+        experience,
+        education: educationList
+    };
+    try {
+        const response = await fetch('https://redberry-api.onrender.com/api/resume/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(resumeData)
+        });
+
+        if (response.ok) {
+            console.log('Resume data submitted successfully');
+        } else {
+            console.error('Failed to submit resume data');
+        }
+    } catch (error) {
+        console.error('Error submitting resume data:', error);
+    }
     navigate("/result");
-  };
+};
 
   return (
     <PageContainer>

@@ -15,6 +15,7 @@ function App() {
     bio: "",
     email: "",
     number: "",
+    photo: ""
   });
 
   const [touched, setTouched] = useState({
@@ -102,7 +103,14 @@ function App() {
         eduTouched={eduTouched}
         setEduTouched={setEduTouched}
       />}/>
-      <Route path="/result" element = {<Result />}/>
+      <Route path="/result" element = {<Result 
+        general={general} 
+        photo={photo} 
+        experience={experience}
+        education={education}
+        touched={touched}
+        expTouched={expTouched}
+        eduTouched={eduTouched}/>}/>
      </Routes>
     </div>
   )

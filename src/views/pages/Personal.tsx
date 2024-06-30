@@ -9,19 +9,19 @@ import StyledPersonal from "../styles/StyledPersonal";
 import { PersonalProps } from "../../types";
 import PersonalResume from "../components/PersonalResume";
 
-
-
-function Personal({general, setGeneral, photo, setPhoto, touched, setTouched,expTouched,eduTouched, experience, education }:PersonalProps) {
+function Personal({ general, setGeneral, photo, setPhoto, touched, setTouched, expTouched, eduTouched, experience, education }: PersonalProps) {
 
   const navigate = useNavigate();
 
   const handleFileChange = (file: File) => {
     const objectUrl = URL.createObjectURL(file);
     setPhoto(objectUrl);
-    setGeneral((prevState) => ({
-      ...prevState,
-      photo: file
-    }));
+    const updatedGeneral = {
+      ...general,
+      photo: objectUrl
+    };
+    setGeneral(updatedGeneral);
+    localStorage.setItem("general", JSON.stringify(updatedGeneral));
   };
 
   const [errors, setErrors] = useState({
@@ -30,7 +30,6 @@ function Personal({general, setGeneral, photo, setPhoto, touched, setTouched,exp
     email: "",
     number: "",
   });
-
 
   const isGeorgianName = (name: string) => /^[ა-ჰ]{2,}$/.test(name);
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+$/.test(email) && email.endsWith("@redberry.ge");
@@ -86,8 +85,6 @@ function Personal({general, setGeneral, photo, setPhoto, touched, setTouched,exp
     }));
   };
 
-
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isEmpty = Object.entries(general).some(([key, value]) =>
@@ -99,13 +96,10 @@ function Personal({general, setGeneral, photo, setPhoto, touched, setTouched,exp
       return; 
     }
     localStorage.setItem("general", JSON.stringify(general));
-    if (photo) {
-      localStorage.setItem("photo", photo);
-    }
-    
+
     navigate("/experience");
   };
-  
+
   const handleBackToHomePage = () => {
     localStorage.removeItem('general');
     localStorage.removeItem('photo');
@@ -114,11 +108,10 @@ function Personal({general, setGeneral, photo, setPhoto, touched, setTouched,exp
     window.location.reload();
   };
 
-
   return (
     <StyledPersonal>
       <div className="form-container">
-      <Link to={"/"} onClick={handleBackToHomePage}>
+        <Link to={"/"} onClick={handleBackToHomePage}>
           <img src="/images/back-arrow.svg" alt="arrow icon" />
         </Link>
         <form onSubmit={handleSubmit}>
@@ -210,7 +203,7 @@ function Personal({general, setGeneral, photo, setPhoto, touched, setTouched,exp
           <StyledButton type="submit" className="next">შემდეგი</StyledButton>
         </form>
       </div>
-      <PersonalResume photo={photo} general={general} touched={touched} experience={experience} expTouched={expTouched} eduTouched={eduTouched} education={education}/>
+      <PersonalResume photo={photo} general={general} touched={touched} experience={experience} expTouched={expTouched} eduTouched={eduTouched} education={education} />
     </StyledPersonal>
   );
 }
