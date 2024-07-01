@@ -9,16 +9,55 @@ import { useState } from "react"
 
 function App() {
 
-  const [resumeInfo, setResumeInfo] = useState({
+  const [general, setGeneral] = useState({
     name: "",
-    surname: "",
-    about: "",
+    last_name: "",
+    bio: "",
     email: "",
     number: "",
-    photo: null as File | null
+    photo: ""
   });
 
-  const [preview, setPreview] = useState<string | null>(null);
+  const [touched, setTouched] = useState({
+    name: false,
+    last_name: false,
+    email: false,
+    number: false,
+    bio: false,
+  });
+
+  const [expTouched, setExpTouched] = useState({
+    position: false,
+    employer: false,
+    start_date: false,
+    end_date: false,
+    info: false,
+  });
+
+  const [eduTouched, setEduTouched] = useState({
+    education: false,
+    degree: false,
+    end_date: false,
+    info: false,
+  });
+
+
+  const [experience, setExperience] = useState([{ 
+    position: "",
+    employer: "",
+    start_date: "",
+    end_date: "",
+    info: "",}]
+  );
+
+  const [education, setEducation] = useState([{ 
+    education: "",
+    degree: "",
+    end_date: "",
+    info: "",}]
+  );
+
+  const [photo, setPhoto] = useState<string | null>(null);
 
 
   return (
@@ -27,19 +66,51 @@ function App() {
       <Route path="/" element = {<Home/>}/>
 
       <Route path="/personal" element = {<Personal 
-      resumeInfo={resumeInfo} 
-      setResumeInfo={setResumeInfo} 
-      preview={preview} 
-      setPreview={setPreview} />}/>
+      general={general} 
+      setGeneral={setGeneral} 
+      photo={photo} 
+      setPhoto={setPhoto} 
+      touched={touched}
+      expTouched={expTouched}
+      eduTouched={eduTouched}
+      setTouched={setTouched}
+      experience={experience}
+      education={education}/>}/>
 
       <Route path="/experience" element = {<Experience 
-      resumeInfo={resumeInfo} 
-      setResumeInfo={setResumeInfo} 
-      preview={preview} 
-      setPreview={setPreview}/>}/>
+      general={general} 
+      setGeneral={setGeneral} 
+      photo={photo} 
+      setPhoto={setPhoto}
+      experience={experience}
+      setExperience={setExperience}
+      education={education}
+      touched={touched}
+      expTouched={expTouched}
+      eduTouched={eduTouched}
+      setExpTouched={setExpTouched}/>}/>
       
-      <Route path="/education" element = {<Education />}/>
-      <Route path="/result" element = {<Result />}/>
+      <Route path="/education" element = {<Education 
+        general={general} 
+        setGeneral={setGeneral} 
+        photo={photo} 
+        setPhoto={setPhoto}
+        experience={experience}
+        education={education}
+        setEducation={setEducation}
+        touched={touched}
+        expTouched={expTouched}
+        eduTouched={eduTouched}
+        setEduTouched={setEduTouched}
+      />}/>
+      <Route path="/result" element = {<Result 
+        general={general} 
+        photo={photo} 
+        experience={experience}
+        education={education}
+        touched={touched}
+        expTouched={expTouched}
+        eduTouched={eduTouched}/>}/>
      </Routes>
     </div>
   )

@@ -3,25 +3,25 @@ import StyledInput, { StyledBigInput, StyledLongInput } from "../styles/styled-c
 import StyledLabel from "../styles/styled-components/StyledLabel";
 import StyledSpan from "../styles/styled-components/StyledSpan";
 import UploadPhoto from "../components/UploadPhoto";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import StyledButton from "../styles/styled-components/StyledButton";
 import StyledPersonal from "../styles/StyledPersonal";
 import { PersonalProps } from "../../types";
 import PersonalResume from "../components/PersonalResume";
 
-
-
-function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProps) {
+function Personal({ general, setGeneral, photo, setPhoto, touched, setTouched, expTouched, eduTouched, experience, education }: PersonalProps) {
 
   const navigate = useNavigate();
 
   const handleFileChange = (file: File) => {
     const objectUrl = URL.createObjectURL(file);
-    setPreview(objectUrl);
-    setResumeInfo((prevState) => ({
-      ...prevState,
-      photo: file
-    }));
+    setPhoto(objectUrl);
+    const updatedGeneral = {
+      ...general,
+      photo: objectUrl
+    };
+    setGeneral(updatedGeneral);
+    localStorage.setItem("general", JSON.stringify(updatedGeneral));
   };
 
   const [errors, setErrors] = useState({
@@ -29,14 +29,6 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
     surname: "",
     email: "",
     number: "",
-  });
-
-  const [touched, setTouched] = useState({
-    name: false,
-    surname: false,
-    email: false,
-    number: false,
-    about: false,
   });
 
   const isGeorgianName = (name: string) => /^[ა-ჰ]{2,}$/.test(name);
@@ -53,7 +45,7 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
           error = "სახელი უნდა შედგებოდეს მინიმუმ 2 ქართული ასოსგან";
         }
         break;
-      case 'surname':
+      case 'last_name':
         if (!isGeorgianName(value)) {
           error = "გვარი უნდა შედგებოდეს მინიმუმ 2 ქართული ასოსგან";
         }
@@ -77,7 +69,7 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
       [id]: error
     }));
 
-    setResumeInfo((prevState) => ({
+    setGeneral((prevState) => ({
       ...prevState,
       [id]: value
     }));
@@ -86,44 +78,40 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
       ...prevState,
       [id]: true
     }));
+
+    localStorage.setItem("general", JSON.stringify({
+      ...general,
+      [id]: value
+    }));
   };
-
-  useEffect(() => {
-    const savedResumeInfo = localStorage.getItem('resumeInfo');
-    const savedPreview = localStorage.getItem('photoPreview');
-
-    if (savedResumeInfo) {
-      setResumeInfo(JSON.parse(savedResumeInfo));
-    }
-    if (savedPreview) {
-      setPreview(savedPreview);
-    }
-  }, []);
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
-    const isEmpty = Object.values(resumeInfo).every(value => 
-      value === null || (typeof value === 'string' && value.trim() === '')
+    const isEmpty = Object.entries(general).some(([key, value]) =>
+      key !== 'bio' && (value === null || (typeof value === 'string' && value.trim() === ''))
     );
-  
-    if (!isEmpty) {
-      localStorage.setItem("resumeInfo", JSON.stringify(resumeInfo));
-      if (preview) {
-        localStorage.setItem("photoPreview", preview);
-      }
+    const hasErrors = Object.values(errors).some(error => !!error);
+
+    if (hasErrors || isEmpty) {
+      return; 
     }
-  
+    localStorage.setItem("general", JSON.stringify(general));
+
     navigate("/experience");
   };
 
-  console.log(localStorage)
+  const handleBackToHomePage = () => {
+    localStorage.removeItem('general');
+    localStorage.removeItem('photo');
+
+    navigate("/");
+    window.location.reload();
+  };
 
   return (
     <StyledPersonal>
       <div className="form-container">
-        <Link to={"/"}>
+        <Link to={"/"} onClick={handleBackToHomePage}>
           <img src="/images/back-arrow.svg" alt="arrow icon" />
         </Link>
         <form onSubmit={handleSubmit}>
@@ -139,10 +127,10 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
                 type="text"
                 id="name"
                 placeholder="შეიყვანეთ სახელი"
-                value={resumeInfo.name}
+                value={general.name}
                 onChange={handleChange}
                 $haserror={!!errors.name}
-                $isvalid={!!resumeInfo.name && !errors.name}
+                $isvalid={!!general.name && !errors.name}
               />
               <StyledSpan>მინიმუმ 2 ასო, ქართული ასოები</StyledSpan>
               {touched.name && (
@@ -150,18 +138,18 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
               )}
             </div>
             <div>
-              <StyledLabel htmlFor="surname">გვარი</StyledLabel>
+              <StyledLabel htmlFor="last_name">გვარი</StyledLabel>
               <StyledInput
                 type="text"
-                id="surname"
+                id="last_name"
                 placeholder="შეიყვანეთ გვარი"
-                value={resumeInfo.surname}
+                value={general.last_name}
                 onChange={handleChange}
                 $haserror={!!errors.surname}
-                $isvalid={!!resumeInfo.surname && !errors.surname}
+                $isvalid={!!general.last_name && !errors.surname}
               />
               <StyledSpan>მინიმუმ 2 ასო, ქართული ასოები</StyledSpan>
-              {touched.surname && (
+              {touched.last_name && (
                 <img className={errors.surname ? 'errorIcon' : "doneIcon"} src={errors.surname ? './images/icon-error.svg' : '/images/icon-done.svg'} alt="error icon" />
               )}
             </div>
@@ -170,11 +158,11 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
           <UploadPhoto onFileChange={handleFileChange} />
 
           <div className="about-section">
-            <StyledLabel htmlFor="about">ჩემ შესახებ (არასავალდებულო)</StyledLabel>
+            <StyledLabel htmlFor="bio">ჩემ შესახებ (არასავალდებულო)</StyledLabel>
             <StyledBigInput
-              id="about"
+              id="bio"
               placeholder="ზოგადი ინფო შენ შესახებ"
-              value={resumeInfo.about}
+              value={general.bio}
               onChange={handleChange}
             />
           </div>
@@ -185,10 +173,10 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
               type="text"
               id="email"
               placeholder="anzorr666@redberry.ge"
-              value={resumeInfo.email}
+              value={general.email}
               onChange={handleChange}
               $haserror={!!errors.email}
-              $isvalid={!!resumeInfo.email && !errors.email}
+              $isvalid={!!general.email && !errors.email}
             />
             <StyledSpan>უნდა მთავრდებოდეს @redberry.ge-ით</StyledSpan>
             {touched.email && (
@@ -202,10 +190,10 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
               type="text"
               id="number"
               placeholder="+995 551 12 34 56"
-              value={resumeInfo.number}
+              value={general.number}
               onChange={handleChange}
               $haserror={!!errors.number}
-              $isvalid={!!resumeInfo.number && !errors.number}
+              $isvalid={!!general.number && !errors.number}
             />
             <StyledSpan>უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს</StyledSpan>
             {touched.number && (
@@ -215,7 +203,7 @@ function Personal({resumeInfo, setResumeInfo, preview, setPreview }:PersonalProp
           <StyledButton type="submit" className="next">შემდეგი</StyledButton>
         </form>
       </div>
-      <PersonalResume preview={preview} resumeInfo={resumeInfo} touched={touched} />
+      <PersonalResume photo={photo} general={general} touched={touched} experience={experience} expTouched={expTouched} eduTouched={eduTouched} education={education} />
     </StyledPersonal>
   );
 }

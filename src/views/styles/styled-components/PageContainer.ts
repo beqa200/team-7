@@ -5,7 +5,6 @@ const PageContainer = styled.div`
     grid-template-columns: 57% 43%;
     
     .form-container{
-        height: 100vh;
         display: grid;
         grid-template-columns: 11.5% 88.5%;
         background-color: #f9f9f9;
@@ -65,11 +64,24 @@ const PageContainer = styled.div`
                     color: #1a1a1a;
                 }
             }
-            
-            & > .next{
-                position: absolute;
-                bottom: 65px;
-                left: calc(100% - 301px);
+           
+                & > .next{
+                    position: absolute;
+                    bottom: 65px;
+                    left: calc(100% - 301px);
+                }
+    
+                & > .back{
+                    position: absolute;
+                    bottom: 65px;
+                    left: 0;
+                }
+          
+
+            & > .addExpBtn{
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 159px;
             }
         }
 
