@@ -42,6 +42,10 @@ const GlobalStyles = createGlobalStyle`
         list-style: none;
         font-family: 'Helvetica Neue';
     }
+
+    body{
+        background-color: #f9f9f9;
+    }
 `;
 
 export default GlobalStyles;

@@ -150,10 +150,9 @@ const StyledPersonal = styled.div`
 
 export const StyledResult = styled.section`
 
-    padding: 48px 75px 44px 80px;
     display: grid;
     grid-template-columns: 63.2% 36.8%;
-    position: relative;
+    grid-template-rows: 1fr 1px;
 
     .info-wrapper{
 
@@ -226,16 +225,12 @@ export const StyledResult = styled.section`
         }
     }
 
-    .resume-logo{
-        position: absolute;
-        left: 78px;
-        bottom: 44px;
-
-        & > img{
-            width: 42px;
-            height: 42px
-        }
+    & > hr{
+        height: 1px ;
+        background-color: #c8c8c8;
+        grid-area: 2/1/2/3;
     }
+   
 `
 
 
